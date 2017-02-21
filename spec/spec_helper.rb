@@ -31,6 +31,25 @@ RSpec.configure do |config|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
+  def sign_up(username, password)
+    visit "/users/new"
+    fill_in "Username", with: username
+    fill_in "Password", with: password
+    click_on "Create"
+  end
+
+  def login(username, password)
+    visit "/session/new"
+    fill_in "Username", with: username
+    fill_in "Password", with: password
+    click_on "Login"
+  end
+
+  def logout
+    visit "/goals"
+    click_on "Log Out"
+  end
+
   # rspec-mocks config goes here. You can use an alternate test double
   # library (such as bogus or mocha) by changing the `mock_with` option here.
   config.mock_with :rspec do |mocks|

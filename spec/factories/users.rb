@@ -12,8 +12,12 @@
 
 FactoryGirl.define do
   factory :user do
-    username 'Fariba'
-    password_digest '1234qwer'
-    session_token '9087poiu'
+    username { Faker::Internet.user_name }
+    password { Faker::Internet.password(6) }
+
+    factory :bad_password do
+      username { Faker::Internet.user_name }
+      password { Faker::Internet.password(5) }
+    end
   end
 end

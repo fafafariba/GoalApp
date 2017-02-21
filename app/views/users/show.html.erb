@@ -1,0 +1,14 @@
+<h1><%= @user.username %>'s Goal Page</h1>
+
+<ul>
+  <% @user.goals.each do |goal| %>
+    <% if goal.visibility = "public" %>
+      <li><%= link_to goal.title, goal_url(goal) %></li>
+        <p>Preview: <%= "#{goal.description[0, 50]}..." %></p>
+    <% end %>
+  <% end %>
+</ul>
+
+<br><br>
+
+<%= button_to "MAIN", goals_url, method: :get %>

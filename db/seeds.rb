@@ -5,3 +5,11 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+user1 = FactoryGirl.create(:user)
+user2 = FactoryGirl.create(:user)
+user3 = FactoryGirl.create(:user)
+user4 = FactoryGirl.create(:user)
+
+goal1 = 

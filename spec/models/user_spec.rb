@@ -14,6 +14,8 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
+  subject(:user) { FactoryGirl.build(:user) }
+
   describe 'validations' do
     it { should validate_presence_of(:username) }
     it { should validate_presence_of(:password_digest) }
@@ -25,21 +27,31 @@ RSpec.describe User, type: :model do
     #it { should have_many(:goals) }
   end
 
-  describe 'class methods' do
 
-    before(:each) do
-      subject(:user) { User.create!(username: "username", password: "password") }
-      let (:bad_password) { "bad_password" }
-    end
+
+  describe 'User::find_by_credentials' do
+    before { user.save! }
+    let (:bad_password) { "bad_password" }
 
     it 'returns user with valid login credentials' do
-      found_user = User.find_by_credentials(user[:username], user[:])
-      expect(User).to receive(:find_by_credentials).and return(:user)
+      founder_user = User.find_by_credentials(user.username, user.password)
 
+      expect(founder_user).to eq(user)
     end
+
     it 'returns nil with invalid login credentials' do
+      founder_user = User.find_by_credentials(user.username, bad_password)
 
+      expect(founder_user).to be nil
     end
+  end
 
+  describe '#reset_session_token' do
+
+    it 'reset_session_token' do
+      current_session_token = user.session_token
+      user.reset_session_token
+      expect(current_session_token).not_to eq(user.session_token)
+    end
   end
 end
