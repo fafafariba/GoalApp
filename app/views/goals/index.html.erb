@@ -3,11 +3,10 @@
 <br><br>
 
 <h2>Latest Goals</h2>
-<br><br>
 <ol>
   <% @goals.order(created_at: :desc).take(10).each do |goal| %>
   <li>
-    <%= link_to goal.title, goal_url %>
+    <%= link_to goal.name, goal_url(goal) %>
   </li>
   <% end %>
 </ol>

@@ -1,14 +1,23 @@
-<h1><%= @user.username %>'s Goal Page</h1>
+<h1><%= current_user == @user ? "My" : "#{@user.username}'s " %> Goals</h1>
+
+<% if current_user == @user  %>
+  <%= button_to "Add New Goal", new_goal_url, method: :get %>
+<% end %>
 
 <ul>
   <% @user.goals.each do |goal| %>
-    <% if goal.visibility = "public" %>
-      <li><%= link_to goal.title, goal_url(goal) %></li>
+    <% if current_user == @user %>
+      <li><%= link_to goal.name, goal_url(goal) %></li>
         <p>Preview: <%= "#{goal.description[0, 50]}..." %></p>
+    <% else %>
+      <% if goal.visibility = "public" %>
+        <li><%= link_to goal.name, goal_url(goal) %></li>
+          <p>Preview: <%= "#{goal.description[0, 50]}..." %></p>
+      <% end %>
     <% end %>
   <% end %>
 </ul>
 
 <br><br>
 
-<%= button_to "MAIN", goals_url, method: :get %>
+<%= button_to "<< ALL THE GOALS", goals_url, method: :get %>

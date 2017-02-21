@@ -2,8 +2,29 @@ require 'rails_helper'
 require 'spec_helper'
 
 feature "creating goals" do
+  subject(:user) { FactoryGirl.build(:user) }
+  let (:password) { user.password }
 
-  scenario "user has create goal button on user page"
+
+   before do
+     p password
+     p user.password
+     user.save
+     p password
+     login(user.username, password)
+     p password
+   end
+
+  scenario "user has add goal button on user page when logged in" do
+    visit "/users/#{user.id}"
+    expect(page).to have_content("Add New Goal")
+  end
+
+  scenario "user does not have add goal button when not logged in" do
+    logout
+    visit "/users/#{user.id}"
+    expect(page).not_to have_content("Add New Goal")
+  end
 
   scenario "user can create goal and it will show up on their page"
 
@@ -25,7 +46,7 @@ feature "editing goals" do
 
 end
 
-feature "deleating goals" do
+feature "deleting goals" do
 
   scenario "user can successfully delete goal"
 

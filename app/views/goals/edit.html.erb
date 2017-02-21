@@ -1,2 +1,34 @@
-<h1>Goals#edit</h1>
-<p>Find me in app/views/goals/edit.html.erb</p>
+<h1>Edit Goal</h1>
+
+<form action="<%= goal_url(@goal) %>" method="POST">
+  <input type="hidden" name="_method" value="PATCH">
+  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token %>">
+
+
+  <label>Name:
+    <input type="text" name="goal[name]" value="<%= @goal.name %>">
+  </label>
+  <br><br>
+  <label>Description:
+    <textarea name="goal[description]"><%= @goal.description %></textarea>
+  </label>
+
+  <p>
+    <input type="radio" name="goal[visibility]" <%= "checked" if @goal.visibility == "public" %> >
+    <label>Public</label>
+    <input type="radio" name="goal[visibility]" <%= "checked" if @goal.visibility == "private" %> >
+    <label>Private</label>
+  </p>
+
+  <label>Status: </label>
+  <p>
+    <input type="radio" name="goal[status]" <%= "checked" if @goal.status == "Ongoing" %> >
+    <label>Ongoing</label>
+    <input type="radio" name="goal[status]" <%= "checked" if @goal.status == "Complete" %> >
+    <label>Complete</label>
+  </p>
+
+
+  <input type="submit" value="Update">
+
+</form>
